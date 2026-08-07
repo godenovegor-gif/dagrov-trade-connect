@@ -1,24 +1,40 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect } from "react";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "DAGROV TRADE — Export of Grains, Pulses and Oilseeds" },
+      {
+        name: "description",
+        content:
+          "LLC DAGROV TRADE — bulk export supplies of Russian coriander, chickpeas, lentils, flaxseed, mustard, safflower, millet and oats. GAFTA standards, Incoterms 2020.",
+      },
+      { property: "og:title", content: "DAGROV TRADE — International Agricultural Trade" },
+      {
+        property: "og:description",
+        content:
+          "Bulk export supplies of Russian grains, pulses and oilseeds to the Middle East, Asia, North Africa and Europe.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+// The site itself is a static HTML/CSS/JS build in `public/site/`.
+// This route just forwards the root URL to it.
 function Index() {
+  useEffect(() => {
+    window.location.replace("/site/index.html");
+  }, []);
+
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="flex min-h-screen items-center justify-center bg-background">
+      <a href="/site/index.html" className="text-sm text-muted-foreground underline">
+        DAGROV TRADE
+      </a>
     </div>
   );
 }
