@@ -26,6 +26,7 @@
       var el = nodes[i];
       var value = el.getAttribute("data-" + lang);
       if (el.tagName === "META") el.setAttribute("content", value);
+      else if (el.tagName === "IMG") el.setAttribute("src", value);
       else el.textContent = value;
     }
     var buttons = document.querySelectorAll(".lang__btn");
