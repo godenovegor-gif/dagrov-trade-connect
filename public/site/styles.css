@@ -85,6 +85,16 @@ p{margin:0 0 1em}
 .card p{margin:0;color:var(--muted-text);font-size:.92rem}
 .card__num{display:inline-block;color:var(--gold);font-weight:700;font-size:.85rem;letter-spacing:.1em;margin-bottom:10px}
 
+/* Product cards with hover image */
+.card--product{position:relative;overflow:hidden;padding:0}
+.card--product .card__body{padding:24px;position:relative;z-index:2;transition:opacity .2s}
+.card__media{position:absolute;inset:0;z-index:1;opacity:0;transition:opacity .25s ease}
+.card__media img{width:100%;height:100%;object-fit:cover}
+.card__media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(34,38,26,.25),rgba(34,38,26,.78))}
+.card--product:hover .card__media,.card--product:focus-within .card__media{opacity:1}
+.card--product:hover h3,.card--product:focus-within h3{color:var(--white)}
+.card--product:hover p,.card--product:focus-within p{color:rgba(255,255,255,.92)}
+
 .steps{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
 .steps li{position:relative;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
 .steps__num{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:var(--olive);color:var(--white);font-weight:700;margin-bottom:12px}
