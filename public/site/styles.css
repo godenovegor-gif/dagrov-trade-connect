@@ -54,8 +54,9 @@ p{margin:0 0 1em}
 /* Buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border-radius:var(--radius);font-weight:600;font-size:.97rem;border:1px solid transparent;cursor:pointer;transition:background var(--transition),color var(--transition),border-color var(--transition),box-shadow var(--transition),transform var(--transition)}
 .btn--sm{padding:9px 18px;font-size:.86rem}
-.btn--primary{background:var(--gold);color:var(--white);border-color:var(--gold)}
-.btn--primary:hover{background:var(--gold);border-color:var(--gold);box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.btn--primary{background:var(--gold);color:#20240f;border-color:var(--gold);font-weight:700}
+.btn--primary:hover{background:#c09a3c;border-color:#c09a3c;box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.btn:focus-visible{outline:2px solid var(--gold-light);outline-offset:3px}
 .btn--ghost{border-color:var(--white);color:var(--white);background:rgba(255,255,255,.1)}
 .btn--ghost:hover{background:var(--white);color:var(--olive-dark);border-color:var(--white)}
 
@@ -90,8 +91,10 @@ p{margin:0 0 1em}
 .card__num{display:inline-block;color:var(--gold);font-weight:700;font-size:.82rem;letter-spacing:.12em;margin-bottom:10px}
 
 /* Product cards with hover image */
-.card--product{position:relative;overflow:hidden;padding:0;min-height:220px;display:flex;align-items:flex-end}
-.card--product .card__body{padding:26px;position:relative;z-index:2;transition:transform var(--transition)}
+.card--product{position:relative;overflow:hidden;padding:0;min-height:220px;display:block}
+.card--product .card__body{padding:26px;position:relative;z-index:2;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;transition:transform var(--transition)}
+.card--product .card__body h3{min-height:calc(1.18em * 2);display:flex;align-items:flex-start;margin-bottom:.55em}
+.card--product .card__body p{margin:0}
 .card__media{position:absolute;inset:0;z-index:1;opacity:0;transition:opacity .35s ease,transform .35s ease;transform:scale(1.05)}
 .card__media img{width:100%;height:100%;object-fit:cover}
 .card__media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(30,33,24,.2),rgba(30,33,24,.72))}
@@ -99,6 +102,14 @@ p{margin:0 0 1em}
 .card--product:hover .card__body,.card--product:focus-within .card__body{transform:translateY(4px)}
 .card--product:hover h3,.card--product:focus-within h3{color:var(--white);text-shadow:0 1px 3px rgba(0,0,0,.25)}
 .card--product:hover p,.card--product:focus-within p{color:rgba(255,255,255,.93)}
+
+/* Touch devices: no hover, so reveal product imagery by default */
+@media (hover:none){
+  .card--product .card__media{opacity:1;transform:scale(1)}
+  .card--product .card__body h3{color:var(--white);text-shadow:0 1px 3px rgba(0,0,0,.3)}
+  .card--product .card__body p{color:rgba(255,255,255,.93)}
+}
+
 
 .steps{list-style:none;margin:32px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
 .steps li{position:relative;background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:26px;transition:box-shadow var(--transition),transform var(--transition)}
