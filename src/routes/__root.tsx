@@ -77,14 +77,43 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "DAGROV TRADE — Bulk Agricultural Export" },
+      {
+        name: "description",
+        content:
+          "LLC DAGROV TRADE supplies Russian grains, pulses and oilseeds in bulk to importers and processors worldwide under GAFTA standards and Incoterms 2020.",
+      },
+      { name: "author", content: "LLC DAGROV TRADE" },
+      { property: "og:site_name", content: "DAGROV TRADE" },
+      { property: "og:title", content: "DAGROV TRADE — Bulk Agricultural Export" },
+      {
+        property: "og:description",
+        content:
+          "Bulk export supplies of Russian grains, pulses and oilseeds — GAFTA standards, Incoterms 2020, worldwide container logistics.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "LLC DAGROV TRADE",
+          url: "https://dagrov-trade-connect.lovable.app",
+          logo: "https://dagrov-trade-connect.lovable.app/site/assets/logo.png",
+          telephone: "+7 988 888 37 85",
+          email: "dtcompany@inbox.ru",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "Rossiyskaya str., 250, room No. 13",
+            addressLocality: "Krasnodar",
+            postalCode: "350073",
+            addressCountry: "RU",
+          },
+        }),
+      },
     ],
     links: [
       {
