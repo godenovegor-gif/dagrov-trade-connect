@@ -164,10 +164,9 @@ textarea{resize:vertical;min-height:120px}
   .nav{
     position:absolute;left:0;right:0;top:100%;
     display:none;flex-direction:column;gap:0;
-    background:rgba(255,255,255,.98);border-bottom:1px solid var(--border);
+    background:var(--white);border-bottom:1px solid var(--border);
     padding:8px 24px 20px;
-    box-shadow:var(--shadow-lg);
-    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)
+    box-shadow:var(--shadow-lg)
   }
   .nav.is-open{display:flex;animation:navIn .24s cubic-bezier(.4,0,.2,1)}
   @keyframes navIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
