@@ -266,3 +266,10 @@ input,textarea{min-height:48px}
   body{color:#000}
   .reveal{opacity:1;transform:none}
 }
+
+@media (max-width:720px){
+  /* Full-bleed product photo on mobile cards */
+  .card--product{padding:0 !important;overflow:hidden}
+  .card--product .card__media{margin:0;width:100%;aspect-ratio:4/3;border-radius:0}
+  .card--product .card__media img{display:block}
+}
