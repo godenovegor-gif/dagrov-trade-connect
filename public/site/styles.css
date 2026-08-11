@@ -213,3 +213,56 @@ textarea{resize:vertical;min-height:120px}
   .card,.steps li{padding:22px}
 }
 
+
+/* ============ Polish pass (2026 audit) ============ */
+
+/* Focus visibility across all interactive elements */
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+
+/* Header: elevate on scroll, tighter nav CTA */
+.header{transition:box-shadow var(--transition),background var(--transition)}
+.header.is-scrolled{box-shadow:0 4px 24px rgba(30,33,24,.07);background:rgba(255,255,255,.94)}
+.nav__cta{display:none}
+.nav a[aria-current="true"]{color:var(--olive);border-color:var(--gold)}
+
+/* Facts strip */
+.facts{background:var(--olive-dark);color:rgba(255,255,255,.9)}
+.facts__inner{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:34px 24px}
+.fact{display:flex;flex-direction:column;gap:4px;position:relative;padding-left:20px}
+.fact::before{content:"";position:absolute;left:0;top:4px;bottom:4px;width:2px;background:var(--gold)}
+.fact__value{font-size:clamp(1.15rem,1.9vw,1.5rem);font-weight:700;color:var(--white);letter-spacing:-.01em;line-height:1.2}
+.fact__label{font-size:.82rem;letter-spacing:.04em;color:rgba(255,255,255,.72)}
+
+/* Form note */
+.form__note{grid-column:1/-1;margin:0;font-size:.78rem;color:var(--muted-text);line-height:1.5}
+
+/* Back to top */
+.totop{position:fixed;right:20px;bottom:20px;z-index:60;width:48px;height:48px;display:grid;place-items:center;border:1px solid var(--border);border-radius:50%;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);box-shadow:var(--shadow-md);cursor:pointer;transition:opacity var(--transition),transform var(--transition),background var(--transition)}
+.totop svg{width:20px;height:20px;fill:var(--olive)}
+.totop:hover{background:var(--olive);transform:translateY(-2px)}
+.totop:hover svg{fill:var(--white)}
+.totop[hidden]{display:none}
+
+/* Selection + accessible text tweaks */
+::selection{background:var(--gold-light);color:var(--olive-dark)}
+.contacts a{word-break:break-word}
+input,textarea{min-height:48px}
+
+/* Tap targets */
+.lang__btn{min-height:40px}
+.nav a{min-height:24px}
+
+@media (max-width:960px){
+  .facts__inner{grid-template-columns:1fr 1fr;gap:20px;padding:28px 24px}
+  .nav__cta{display:inline-flex;margin-top:14px;width:100%}
+  .header__cta{display:none}
+}
+@media (max-width:720px){
+  .totop{right:14px;bottom:14px;width:44px;height:44px}
+  .facts__inner{padding:24px 20px}
+}
+@media print{
+  .header,.totop,.hero__actions,.form,.lang,.burger{display:none !important}
+  body{color:#000}
+  .reveal{opacity:1;transform:none}
+}
