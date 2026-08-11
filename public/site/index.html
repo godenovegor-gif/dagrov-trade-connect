@@ -256,8 +256,8 @@
       <form class="form" id="contactForm" novalidate>
         <div class="field">
           <label for="name" data-ru="Имя *" data-en="Name *">Имя *</label>
-          <input id="name" name="name" type="text" required autocomplete="name">
-          <small class="error" data-ru="Укажите имя" data-en="Please enter your name">Укажите имя</small>
+          <input id="name" name="name" type="text" required autocomplete="name" aria-describedby="name-err">
+          <small class="error" id="name-err" data-ru="Укажите имя" data-en="Please enter your name">Укажите имя</small>
         </div>
         <div class="field">
           <label for="company" data-ru="Компания" data-en="Company">Компания</label>
@@ -265,21 +265,22 @@
         </div>
         <div class="field">
           <label for="email" data-ru="Email *" data-en="Email *">Email *</label>
-          <input id="email" name="email" type="email" required autocomplete="email">
-          <small class="error" data-ru="Укажите корректный email" data-en="Please enter a valid email">Укажите корректный email</small>
+          <input id="email" name="email" type="email" required autocomplete="email" inputmode="email" aria-describedby="email-err">
+          <small class="error" id="email-err" data-ru="Укажите корректный email" data-en="Please enter a valid email">Укажите корректный email</small>
         </div>
         <div class="field">
           <label for="phone" data-ru="Телефон *" data-en="Phone *">Телефон *</label>
-          <input id="phone" name="phone" type="tel" required autocomplete="tel">
-          <small class="error" data-ru="Укажите телефон" data-en="Please enter your phone">Укажите телефон</small>
+          <input id="phone" name="phone" type="tel" required autocomplete="tel" inputmode="tel" aria-describedby="phone-err">
+          <small class="error" id="phone-err" data-ru="Укажите телефон" data-en="Please enter your phone">Укажите телефон</small>
         </div>
         <div class="field field--full">
           <label for="message" data-ru="Сообщение *" data-en="Message *">Сообщение *</label>
-          <textarea id="message" name="message" rows="4" required></textarea>
-          <small class="error" data-ru="Напишите ваш запрос" data-en="Please describe your request">Напишите ваш запрос</small>
+          <textarea id="message" name="message" rows="4" required aria-describedby="message-err"></textarea>
+          <small class="error" id="message-err" data-ru="Напишите ваш запрос" data-en="Please describe your request">Напишите ваш запрос</small>
         </div>
+        <p class="form__note field--full" data-ru="Нажимая «Отправить», вы соглашаетесь на обработку указанных данных для ответа на ваш запрос." data-en="By submitting, you agree to the processing of the data provided in order to answer your inquiry.">Нажимая «Отправить», вы соглашаетесь на обработку указанных данных для ответа на ваш запрос.</p>
         <button class="btn btn--primary field--full" type="submit" data-ru="Отправить запрос" data-en="Send request">Отправить запрос</button>
-        <p class="form__ok" id="formOk" hidden data-ru="Спасибо! Мы свяжемся с вами в ближайшее время." data-en="Thank you! We will contact you shortly.">Спасибо! Мы свяжемся с вами в ближайшее время.</p>
+        <p class="form__ok" id="formOk" role="status" aria-live="polite" hidden data-ru="Спасибо! Мы свяжемся с вами в ближайшее время." data-en="Thank you! We will contact you shortly.">Спасибо! Мы свяжемся с вами в ближайшее время.</p>
       </form>
     </div>
   </section>
