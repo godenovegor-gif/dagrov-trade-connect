@@ -6,13 +6,22 @@
 <title data-ru="ДАГРОВ ТРЕЙД — экспорт зерновых, бобовых и масличных культур" data-en="DAGROV TRADE — Export of Grains, Pulses and Oilseeds">ДАГРОВ ТРЕЙД — экспорт зерновых, бобовых и масличных культур</title>
 <meta name="description" data-ru="ООО «ДАГРОВ ТРЕЙД» — крупнооптовые экспортные поставки кориандра, нута, чечевицы, льна, горчицы, сафлора, просо и овса. Стандарты GAFTA, Incoterms 2020." data-en="LLC DAGROV TRADE — bulk export supplies of coriander, chickpeas, lentils, flaxseed, mustard, safflower, millet and oats. GAFTA standards, Incoterms 2020." content="ООО «ДАГРОВ ТРЕЙД» — крупнооптовые экспортные поставки кориандра, нута, чечевицы, льна, горчицы, сафлора, просо и овса. Стандарты GAFTA, Incoterms 2020.">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="DAGROV TRADE">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:locale:alternate" content="en_US">
 <meta property="og:title" content="DAGROV TRADE — International Agricultural Trade">
 <meta property="og:description" content="Bulk export supplies of Russian grains, pulses and oilseeds. GAFTA standards, worldwide logistics.">
+<meta property="og:url" content="https://dagrov-trade-connect.lovable.app/">
+<meta property="og:image" content="https://dagrov-trade-connect.lovable.app/site/assets/hero.jpg">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://dagrov-trade-connect.lovable.app/site/assets/hero.jpg">
+<meta name="theme-color" content="#4d5622">
+<meta name="format-detection" content="telephone=no">
 <link rel="canonical" href="https://dagrov-trade-connect.lovable.app/">
 <link rel="icon" href="/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="assets/hero.jpg" fetchpriority="high">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -31,14 +40,15 @@
       <a href="#why" data-ru="Преимущества" data-en="Why us">Преимущества</a>
       <a href="#process" data-ru="Партнёрам" data-en="Partners">Партнёрам</a>
       <a href="#contact" data-ru="Контакты" data-en="Contacts">Контакты</a>
+      <a class="btn btn--primary btn--sm nav__cta" href="#contact" data-ru="Связаться" data-en="Contact us">Связаться</a>
     </nav>
 
     <div class="header__actions">
       <div class="lang" role="group" aria-label="Language">
-        <button type="button" class="lang__btn is-active" data-lang="ru">RU</button>
-        <button type="button" class="lang__btn" data-lang="en">EN</button>
+        <button type="button" class="lang__btn is-active" data-lang="ru" aria-pressed="true">RU</button>
+        <button type="button" class="lang__btn" data-lang="en" aria-pressed="false">EN</button>
       </div>
-      <a class="btn btn--primary btn--sm" href="#contact" data-ru="Связаться" data-en="Contact us">Связаться</a>
+      <a class="btn btn--primary btn--sm header__cta" href="#contact" data-ru="Связаться" data-en="Contact us">Связаться</a>
       <button class="burger" id="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav">
         <span></span><span></span><span></span>
       </button>
@@ -55,6 +65,27 @@
       <div class="hero__actions">
         <a class="btn btn--primary" href="#contact" data-ru="Запросить прайс" data-en="Request a quote">Запросить прайс</a>
         <a class="btn btn--ghost" href="#products" data-ru="Наша продукция" data-en="Our products">Наша продукция</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="facts" aria-label="Key facts">
+    <div class="container facts__inner">
+      <div class="fact">
+        <span class="fact__value">8</span>
+        <span class="fact__label" data-ru="экспортных культур" data-en="export commodities">экспортных культур</span>
+      </div>
+      <div class="fact">
+        <span class="fact__value">GAFTA</span>
+        <span class="fact__label" data-ru="стандарты контрактов" data-en="contract standards">стандарты контрактов</span>
+      </div>
+      <div class="fact">
+        <span class="fact__value">Incoterms 2020</span>
+        <span class="fact__label" data-ru="условия поставки" data-en="delivery terms">условия поставки</span>
+      </div>
+      <div class="fact">
+        <span class="fact__value">FCL 20&#39;/40&#39;</span>
+        <span class="fact__label" data-ru="контейнерные отгрузки" data-en="container shipments">контейнерные отгрузки</span>
       </div>
     </div>
   </section>
@@ -225,8 +256,8 @@
       <form class="form" id="contactForm" novalidate>
         <div class="field">
           <label for="name" data-ru="Имя *" data-en="Name *">Имя *</label>
-          <input id="name" name="name" type="text" required autocomplete="name">
-          <small class="error" data-ru="Укажите имя" data-en="Please enter your name">Укажите имя</small>
+          <input id="name" name="name" type="text" required autocomplete="name" aria-describedby="name-err">
+          <small class="error" id="name-err" data-ru="Укажите имя" data-en="Please enter your name">Укажите имя</small>
         </div>
         <div class="field">
           <label for="company" data-ru="Компания" data-en="Company">Компания</label>
@@ -234,21 +265,22 @@
         </div>
         <div class="field">
           <label for="email" data-ru="Email *" data-en="Email *">Email *</label>
-          <input id="email" name="email" type="email" required autocomplete="email">
-          <small class="error" data-ru="Укажите корректный email" data-en="Please enter a valid email">Укажите корректный email</small>
+          <input id="email" name="email" type="email" required autocomplete="email" inputmode="email" aria-describedby="email-err">
+          <small class="error" id="email-err" data-ru="Укажите корректный email" data-en="Please enter a valid email">Укажите корректный email</small>
         </div>
         <div class="field">
           <label for="phone" data-ru="Телефон *" data-en="Phone *">Телефон *</label>
-          <input id="phone" name="phone" type="tel" required autocomplete="tel">
-          <small class="error" data-ru="Укажите телефон" data-en="Please enter your phone">Укажите телефон</small>
+          <input id="phone" name="phone" type="tel" required autocomplete="tel" inputmode="tel" aria-describedby="phone-err">
+          <small class="error" id="phone-err" data-ru="Укажите телефон" data-en="Please enter your phone">Укажите телефон</small>
         </div>
         <div class="field field--full">
           <label for="message" data-ru="Сообщение *" data-en="Message *">Сообщение *</label>
-          <textarea id="message" name="message" rows="4" required></textarea>
-          <small class="error" data-ru="Напишите ваш запрос" data-en="Please describe your request">Напишите ваш запрос</small>
+          <textarea id="message" name="message" rows="4" required aria-describedby="message-err"></textarea>
+          <small class="error" id="message-err" data-ru="Напишите ваш запрос" data-en="Please describe your request">Напишите ваш запрос</small>
         </div>
+        <p class="form__note field--full" data-ru="Нажимая «Отправить», вы соглашаетесь на обработку указанных данных для ответа на ваш запрос." data-en="By submitting, you agree to the processing of the data provided in order to answer your inquiry.">Нажимая «Отправить», вы соглашаетесь на обработку указанных данных для ответа на ваш запрос.</p>
         <button class="btn btn--primary field--full" type="submit" data-ru="Отправить запрос" data-en="Send request">Отправить запрос</button>
-        <p class="form__ok" id="formOk" hidden data-ru="Спасибо! Мы свяжемся с вами в ближайшее время." data-en="Thank you! We will contact you shortly.">Спасибо! Мы свяжемся с вами в ближайшее время.</p>
+        <p class="form__ok" id="formOk" role="status" aria-live="polite" hidden data-ru="Спасибо! Мы свяжемся с вами в ближайшее время." data-en="Thank you! We will contact you shortly.">Спасибо! Мы свяжемся с вами в ближайшее время.</p>
       </form>
     </div>
   </section>
@@ -315,6 +347,10 @@
   ]
 }
 </script>
+<button class="totop" id="toTop" type="button" aria-label="Наверх" data-ru-aria="Наверх" data-en-aria="Back to top" hidden>
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5l-7 7h4v7h6v-7h4z"/></svg>
+</button>
+
 <script src="script.js" defer></script>
 </body>
 </html>
