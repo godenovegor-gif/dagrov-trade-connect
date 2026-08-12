@@ -19,7 +19,7 @@
 html{scroll-behavior:smooth}
 body{
   margin:0;
-  font-family:"Inter",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  font-family:"Helvetica Neue",Helvetica,Arial,"Inter",system-ui,sans-serif;
   color:var(--ink);
   background:var(--white);
   line-height:1.65;
@@ -54,7 +54,7 @@ p{margin:0 0 1em}
 /* Buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 28px;border-radius:var(--radius);font-weight:600;font-size:.97rem;border:1px solid transparent;cursor:pointer;transition:background var(--transition),color var(--transition),border-color var(--transition),box-shadow var(--transition),transform var(--transition)}
 .btn--sm{padding:9px 18px;font-size:.86rem}
-.btn--primary{background:var(--gold);color:#20240f;border-color:var(--gold);font-weight:700}
+.btn--primary{background:var(--gold);color:#fff;border-color:var(--gold);font-weight:700}
 .btn--primary:hover{background:#c09a3c;border-color:#c09a3c;box-shadow:var(--shadow-md);transform:translateY(-2px)}
 .btn:focus-visible{outline:2px solid var(--gold-light);outline-offset:3px}
 .btn--ghost{border-color:var(--white);color:var(--white);background:rgba(255,255,255,.1)}
@@ -276,7 +276,7 @@ input,textarea{min-height:48px}
 
 /* ============ v3: editorial / organic direction (2026) ============ */
 :root{
-  --display:"Bricolage Grotesque","Inter",system-ui,sans-serif;
+  --display:"Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;
   --arch:clamp(90px,14vw,190px);
   --cream:#f4f1e6;
 }
@@ -298,7 +298,7 @@ h2{font-size:clamp(1.7rem,3.2vw,2.7rem);line-height:1.1;max-width:20ch}
 .hero__panel{position:relative}
 .arch{position:relative;border-radius:var(--arch) var(--arch) 20px 20px;overflow:hidden;box-shadow:var(--shadow-lg);aspect-ratio:4/5}
 .arch::after{content:"";position:absolute;inset:0;border-radius:inherit;border:1px solid rgba(255,255,255,.28)}
-.arch img{width:100%;height:100%;object-fit:cover}
+.arch img{width:100%;height:100%;object-fit:cover;object-position:84% 55%}
 .hero__badge{position:absolute;left:-18px;bottom:26px;background:var(--cream);color:var(--olive-dark);border-radius:999px 999px 999px 24px;padding:18px 26px;box-shadow:var(--shadow-lg);display:grid;gap:2px;max-width:200px}
 .hero__badge-value{font-size:2.1rem;line-height:1;font-weight:700;color:var(--gold)}
 .hero__badge-label{font-size:.78rem;letter-spacing:.04em;color:var(--muted-text)}
@@ -325,8 +325,8 @@ h2{font-size:clamp(1.7rem,3.2vw,2.7rem);line-height:1.1;max-width:20ch}
 .steps li{background:transparent;border:0;border-top:1px solid var(--border);border-radius:0;display:grid;grid-template-columns:96px minmax(0,1fr) minmax(0,1.15fr);gap:28px;align-items:center;padding:32px 8px;transition:background var(--transition)}
 .steps li:last-child{border-bottom:1px solid var(--border)}
 .steps li:hover{box-shadow:none;transform:none;background:rgba(255,255,255,.55)}
-.steps__num{width:auto;height:auto;background:none;font-family:var(--display);font-size:clamp(2.6rem,4.6vw,3.9rem);font-weight:700;line-height:.85;margin:0;color:transparent;-webkit-text-stroke:1.5px var(--gold);transition:color var(--transition)}
-.steps li:hover .steps__num{color:var(--gold-light)}
+.steps__num{width:auto;height:auto;background:none;font-family:var(--display);font-size:clamp(2.6rem,4.6vw,3.9rem);font-weight:700;line-height:.85;margin:0;color:var(--gold);transition:color var(--transition)}
+.steps li:hover .steps__num{color:var(--olive)}
 .steps h3{margin:0;font-size:1.15rem}
 .steps p{align-self:center}
 
