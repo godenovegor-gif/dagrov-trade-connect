@@ -356,3 +356,15 @@ input,textarea{border-radius:12px}
   .card--product:nth-child(odd),.card--product:nth-child(even){border-radius:26px}
   .footer{border-radius:56px 56px 0 0}
 }
+
+/* Product cards: always-visible arched photo (desktop + mobile) */
+.card--product{min-height:0;padding:0;overflow:hidden;background:var(--white)}
+.card--product .card__media{position:relative;inset:auto;opacity:1;transform:none;width:100%;aspect-ratio:4/3;overflow:hidden;border-radius:inherit;border-bottom-left-radius:0;border-bottom-right-radius:0}
+.card--product .card__media::after{display:none}
+.card--product .card__media img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.card--product:hover .card__media img,.card--product:focus-within .card__media img{transform:scale(1.06)}
+.card--product .card__body{padding:22px 24px 26px;transform:none}
+.card--product .card__body h3,.card--product:hover .card__body h3{min-height:calc(1.18em * 2);color:var(--olive-dark);text-shadow:none}
+.card--product .card__body p,.card--product:hover .card__body p{color:var(--muted-text)}
+.card--product:hover,.card--product:focus-within{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:var(--gold-light)}
+@media (hover:none){.card--product .card__body h3{color:var(--olive-dark);text-shadow:none}.card--product .card__body p{color:var(--muted-text)}}
