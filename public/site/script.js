@@ -83,6 +83,17 @@
         if (this.parentNode.classList.contains("is-invalid")) validateField(this);
       });
     }
+    var submitBtn = form.querySelector("button[type='submit']");
+
+    function setStatus(text, isError) {
+      if (!ok) return;
+      ok.hidden = false;
+      ok.textContent = text;
+      ok.classList.toggle("form__ok--error", !!isError);
+      ok.setAttribute("tabindex", "-1");
+      ok.focus();
+    }
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       var valid = true;
@@ -96,14 +107,57 @@
         if (first) first.focus();
         return;
       }
-      if (ok) {
-        ok.hidden = false;
-        ok.setAttribute("tabindex", "-1");
-        ok.focus();
+
+      var lang = document.documentElement.lang === "en" ? "en" : "ru";
+      var payload = {
+        name: form.name.value.trim(),
+        company: form.company.value.trim(),
+        email: form.email.value.trim(),
+        phone: form.phone.value.trim(),
+        message: form.message.value.trim(),
+        lang: lang,
+      };
+
+      var sendingText = lang === "en" ? "Sending…" : "Отправляем…";
+      var okText =
+        lang === "en"
+          ? "Thank you! We will contact you shortly."
+          : "Спасибо! Мы свяжемся с вами в ближайшее время.";
+      var errText =
+        lang === "en"
+          ? "Sending failed. Please try again or email dtcompany@inbox.ru."
+          : "Не удалось отправить. Попробуйте ещё раз или напишите на dtcompany@inbox.ru.";
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.dataset.label = submitBtn.textContent;
+        submitBtn.textContent = sendingText;
       }
-      form.reset();
-      var fields = form.querySelectorAll(".field");
-      for (var f = 0; f < fields.length; f++) fields[f].classList.remove("is-invalid");
+
+      fetch("/api/public/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      })
+        .then(function (res) {
+          return res.json().catch(function () { return { ok: res.ok }; });
+        })
+        .then(function (res) {
+          if (!res || !res.ok) throw new Error("failed");
+          setStatus(okText, false);
+          form.reset();
+          var fields = form.querySelectorAll(".field");
+          for (var f = 0; f < fields.length; f++) fields[f].classList.remove("is-invalid");
+        })
+        .catch(function () {
+          setStatus(errText, true);
+        })
+        .then(function () {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            if (submitBtn.dataset.label) submitBtn.textContent = submitBtn.dataset.label;
+          }
+        });
     });
   }
 
