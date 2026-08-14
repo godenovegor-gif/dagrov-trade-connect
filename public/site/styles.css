@@ -133,6 +133,7 @@ textarea{resize:vertical;min-height:120px}
 .field.is-invalid .error{display:block}
 .field.is-invalid input,.field.is-invalid textarea{border-color:#a3341f}
 .form__ok{grid-column:1/-1;margin:0;color:var(--olive);font-weight:600}
+.form__ok--error{color:#a8322e}
 
 /* Footer */
 .footer{background:var(--olive-dark);color:rgba(255,255,255,.84);padding:72px 0 28px;font-size:.93rem}
