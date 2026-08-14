@@ -10,7 +10,15 @@ const schema = z.object({
   lang: z.enum(["ru", "en"]).optional().default("ru"),
 });
 
+const esc = (value: string) =>
+  value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+
 const json = (body: unknown, status = 200) =>
+
   new Response(JSON.stringify(body), {
     status,
     headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
