@@ -10,15 +10,7 @@ const schema = z.object({
   lang: z.enum(["ru", "en"]).optional().default("ru"),
 });
 
-const esc = (value: string) =>
-  value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-
 const json = (body: unknown, status = 200) =>
-
   new Response(JSON.stringify(body), {
     status,
     headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
@@ -58,59 +50,36 @@ export const Route = createFileRoute("/api/public/contact")({
           return json({ ok: false, error: "storage_failed" }, 500);
         }
 
-        const resendKey = process.env["RESEND_API_KEY"];
-        if (!resendKey) {
-          console.error("RESEND_API_KEY is not configured");
-          return json({ ok: false, error: "email_not_configured" }, 500);
-        }
+        const web3formsKey =
+          process.env["WEB3FORMS_ACCESS_KEY"] || "a51a5e5a-1a0d-467f-b641-800b1610a130";
 
-        const from = process.env["CONTACT_FROM_EMAIL"] || "DAGROV TRADE <onboarding@resend.dev>";
-        const to = process.env["CONTACT_TO_EMAIL"] || "dtcompany@inbox.ru";
-
-        const row = (label: string, value: string) =>
-          `<tr><td style="padding:10px 16px;border-bottom:1px solid #eae6d9;color:#6b6a5e;font:600 13px Helvetica,Arial,sans-serif;white-space:nowrap">${label}</td><td style="padding:10px 16px;border-bottom:1px solid #eae6d9;color:#20240f;font:400 14px Helvetica,Arial,sans-serif">${esc(value)}</td></tr>`;
-
-        const html = `<div style="background:#f4f1e6;padding:28px">
-  <div style="max-width:600px;margin:0 auto;background:#ffffff;border-radius:14px;overflow:hidden;border:1px solid #eae6d9">
-    <div style="background:#4d5622;padding:20px 24px;color:#ffffff;font:700 18px Helvetica,Arial,sans-serif">DAGROV TRADE — новая заявка</div>
-    <table style="width:100%;border-collapse:collapse">
-      ${row("Имя", data.name)}
-      ${row("Компания", data.company || "—")}
-      ${row("Email", data.email)}
-      ${row("Телефон", data.phone)}
-      ${row("Язык", data.lang.toUpperCase())}
-    </table>
-    <div style="padding:16px 24px">
-      <div style="color:#6b6a5e;font:600 13px Helvetica,Arial,sans-serif;margin-bottom:6px">Сообщение</div>
-      <div style="color:#20240f;font:400 14px/1.6 Helvetica,Arial,sans-serif;white-space:pre-wrap">${esc(data.message)}</div>
-    </div>
-    <div style="padding:14px 24px;background:#f8f7f2;color:#6b6a5e;font:400 12px Helvetica,Arial,sans-serif">Отправлено с сайта dagrovtrade</div>
-  </div>
-</div>`;
-
-        const res = await fetch("https://api.resend.com/emails", {
+        const res = await fetch("https://api.web3forms.com/submit", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${resendKey}`,
+            Accept: "application/json",
           },
           body: JSON.stringify({
-            from,
-            to: [to],
-            reply_to: data.email,
+            access_key: web3formsKey,
             subject: `Новая заявка: ${data.name}${data.company ? ` (${data.company})` : ""}`,
-            html,
+            from_name: "DAGROV TRADE — сайт",
+            replyto: data.email,
+            name: data.name,
+            company: data.company || "—",
+            email: data.email,
+            phone: data.phone,
+            message: data.message,
+            lang: data.lang.toUpperCase(),
           }),
         });
 
-        if (!res.ok) {
-          const body = await res.text();
-          console.error(`Resend send failed [${res.status}]: ${body}`);
+        const resBody = await res.json().catch(() => null);
+        if (!res.ok || !resBody?.success) {
+          console.error(`Web3Forms send failed [${res.status}]:`, resBody);
           return json({ ok: false, error: "email_failed" }, 502);
         }
 
         return json({ ok: true });
-
       },
     },
   },
