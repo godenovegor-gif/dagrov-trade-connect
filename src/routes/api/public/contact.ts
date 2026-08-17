@@ -33,22 +33,6 @@ export const Route = createFileRoute("/api/public/contact")({
         }
 
         const data = parsed.data;
-        const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-
-        const { error } = await supabaseAdmin.from("contact_requests").insert({
-          name: data.name,
-          company: data.company || null,
-          email: data.email,
-          phone: data.phone,
-          message: data.message,
-          lang: data.lang,
-          user_agent: request.headers.get("user-agent")?.slice(0, 300) ?? null,
-        });
-
-        if (error) {
-          console.error("contact_requests insert failed", error.message);
-          return json({ ok: false, error: "storage_failed" }, 500);
-        }
 
         const web3formsKey =
           process.env["WEB3FORMS_ACCESS_KEY"] || "a51a5e5a-1a0d-467f-b641-800b1610a130";
