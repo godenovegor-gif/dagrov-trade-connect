@@ -46,7 +46,9 @@
       buttons[j].classList.toggle("is-active", active);
       buttons[j].setAttribute("aria-pressed", active ? "true" : "false");
     }
-    try { localStorage.setItem("dagrov-lang", lang); } catch (err) {}
+    try {
+      localStorage.setItem("dagrov-lang", lang);
+    } catch (err) {}
   }
 
   var langButtons = document.querySelectorAll(".lang__btn");
@@ -57,7 +59,9 @@
   }
 
   var saved = null;
-  try { saved = localStorage.getItem("dagrov-lang"); } catch (err) {}
+  try {
+    saved = localStorage.getItem("dagrov-lang");
+  } catch (err) {}
   if (!saved) saved = (navigator.language || "ru").toLowerCase().indexOf("ru") === 0 ? "ru" : "en";
   setLang(saved);
 
@@ -68,8 +72,14 @@
   function validateField(input) {
     var value = input.value.trim();
     var good = value.length > 1;
-    if (input.type === "email") good = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
-    if (input.type === "tel") good = value.replace(/\D/g, "").length >= 7;
+    if (input.id === "name") good = value.length >= 2 && value.length <= 100;
+    if (input.id === "message") good = value.length >= 2 && value.length <= 2000;
+    if (input.type === "email")
+      good = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value) && value.length <= 255;
+    if (input.type === "tel") {
+      var digits = value.replace(/\D/g, "").length;
+      good = digits >= 7 && value.length <= 40;
+    }
     input.parentNode.classList.toggle("is-invalid", !good);
     input.setAttribute("aria-invalid", good ? "false" : "true");
     return good;
@@ -78,7 +88,9 @@
   if (form) {
     var required = form.querySelectorAll("[required]");
     for (var r = 0; r < required.length; r++) {
-      required[r].addEventListener("blur", function () { validateField(this); });
+      required[r].addEventListener("blur", function () {
+        validateField(this);
+      });
       required[r].addEventListener("input", function () {
         if (this.parentNode.classList.contains("is-invalid")) validateField(this);
       });
@@ -109,14 +121,11 @@
       }
 
       var lang = document.documentElement.lang === "en" ? "en" : "ru";
-      var payload = {
-        name: form.name.value.trim(),
-        company: form.company.value.trim(),
-        email: form.email.value.trim(),
-        phone: form.phone.value.trim(),
-        message: form.message.value.trim(),
-        lang: lang,
-      };
+      var name = form.name.value.trim();
+      var company = form.company.value.trim().slice(0, 150);
+      var email = form.email.value.trim();
+      var phone = form.phone.value.trim();
+      var message = form.message.value.trim();
 
       var sendingText = lang === "en" ? "Sending…" : "Отправляем…";
       var okText =
@@ -134,16 +143,40 @@
         submitBtn.textContent = sendingText;
       }
 
-      fetch("/api/public/contact", {
+      if (typeof window.fetch !== "function" || typeof window.Promise !== "function") {
+        setStatus(errText, true);
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          if (submitBtn.dataset.label) submitBtn.textContent = submitBtn.dataset.label;
+        }
+        return;
+      }
+
+      var payload = {
+        access_key: "a51a5e5a-1a0d-467f-b641-800b1610a130",
+        subject: "Новая заявка: " + name + (company ? " (" + company + ")" : ""),
+        from_name: "DAGROV TRADE — сайт",
+        replyto: email,
+        name: name,
+        company: company || "—",
+        email: email,
+        phone: phone,
+        message: message,
+        lang: lang.toUpperCase(),
+      };
+
+      fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(payload),
       })
         .then(function (res) {
-          return res.json().catch(function () { return { ok: res.ok }; });
+          return res.json().catch(function () {
+            return { success: false };
+          });
         })
         .then(function (res) {
-          if (!res || !res.ok) throw new Error("failed");
+          if (!res || !res.success) throw new Error("failed");
           setStatus(okText, false);
           form.reset();
           var fields = form.querySelectorAll(".field");
@@ -167,15 +200,20 @@
 
   /* Reveal on scroll */
   if ("IntersectionObserver" in window) {
-    var targets = document.querySelectorAll(".section > .container > *, .card, .steps li, .goals li, .fact");
-    var io = new IntersectionObserver(function (entries) {
-      for (var i = 0; i < entries.length; i++) {
-        if (entries[i].isIntersecting) {
-          entries[i].target.classList.add("is-visible");
-          io.unobserve(entries[i].target);
+    var targets = document.querySelectorAll(
+      ".section > .container > *, .card, .steps li, .goals li, .fact",
+    );
+    var io = new IntersectionObserver(
+      function (entries) {
+        for (var i = 0; i < entries.length; i++) {
+          if (entries[i].isIntersecting) {
+            entries[i].target.classList.add("is-visible");
+            io.unobserve(entries[i].target);
+          }
         }
-      }
-    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.06 });
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.06 },
+    );
     for (var t = 0; t < targets.length; t++) {
       targets[t].classList.add("reveal");
       io.observe(targets[t]);
@@ -190,15 +228,19 @@
       if (section) sections.push({ el: section, link: links[l] });
     }
     if (sections.length) {
-      var spy = new IntersectionObserver(function (entries) {
-        for (var i = 0; i < entries.length; i++) {
-          if (!entries[i].isIntersecting) continue;
-          for (var s = 0; s < sections.length; s++) {
-            if (sections[s].el === entries[i].target) sections[s].link.setAttribute("aria-current", "true");
-            else sections[s].link.removeAttribute("aria-current");
+      var spy = new IntersectionObserver(
+        function (entries) {
+          for (var i = 0; i < entries.length; i++) {
+            if (!entries[i].isIntersecting) continue;
+            for (var s = 0; s < sections.length; s++) {
+              if (sections[s].el === entries[i].target)
+                sections[s].link.setAttribute("aria-current", "true");
+              else sections[s].link.removeAttribute("aria-current");
+            }
           }
-        }
-      }, { rootMargin: "-45% 0px -50% 0px" });
+        },
+        { rootMargin: "-45% 0px -50% 0px" },
+      );
       for (var q = 0; q < sections.length; q++) spy.observe(sections[q].el);
     }
   }
